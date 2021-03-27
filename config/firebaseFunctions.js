@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { Alert } from 'react-native';
+import { Alert, AsyncStorage } from 'react-native';
 
 export async function registration(nickName, email, password, navigation) {
   try {
@@ -13,6 +13,7 @@ export async function registration(nickName, email, password, navigation) {
       nickName: nickName,
     });
     Alert.alert('회원가입 성공!');
+    await AsyncStorage.setItem('session', email);
     navigation.push('TabNavigator');
   } catch (err) {
     Alert.alert('무슨 문제가 있는 것 같아요! => ', err.message);
@@ -22,6 +23,7 @@ export async function registration(nickName, email, password, navigation) {
 export async function signIn(email, password, navigation) {
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
+    await AsyncStorage.setItem('session', email);
     navigation.push('TabNavigator');
   } catch (err) {
     Alert.alert('로그인에 문제가 있습니다! ', err.message);
@@ -32,7 +34,7 @@ export async function logout(navigation) {
   try {
     console.log('로그아웃!!');
     const currentUser = firebase.auth().currentUser;
-    console.log(currentUser);
+    await AsyncStorage.removeItem('session');
     await firebase.auth().signOut();
     navigation.push('SignInPage');
   } catch (err) {
