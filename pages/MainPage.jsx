@@ -22,8 +22,8 @@ export default function MainPage({ navigation }) {
       <HeaderComponent />
       <Content>
         <Animatable.View
-          animation="pulse"
-          easing="ease-out"
+          animation="fadeIn"
+          easing="ease-in"
           iterationCount={'infinite'}
           direction="alternate"
         >
