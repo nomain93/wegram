@@ -1,16 +1,8 @@
 import React from 'react';
 import { StyleSheet, ImageBackground } from 'react-native';
-import {
-  Container,
-  Content,
-  Text,
-  Form,
-  Item,
-  Input,
-  Label,
-  Button,
-} from 'native-base';
-const bImage = require('../assets/iu.png');
+import { Container, Content, Text, Form, Button } from 'native-base';
+const bImage = require('../assets/background.png');
+import ItemInput from '../components/ItemInput';
 
 export default function SignInPage({ navigation }) {
   const goSignUp = () => {
@@ -22,17 +14,11 @@ export default function SignInPage({ navigation }) {
       <ImageBackground source={bImage} style={styles.backgroundImage}>
         <Content contentContainerStyle={styles.content} scrollEnabled={false}>
           <Text style={styles.title}>
-            <Text style={styles.highlite}>IU</Text>gram
+            <Text style={styles.highlite}>we</Text>gram
           </Text>
           <Form style={styles.form}>
-            <Item floatingLabel last>
-              <Label style={styles.label}>이메일</Label>
-              <Input style={styles.input} />
-            </Item>
-            <Item floatingLabel last>
-              <Label style={styles.label}>비밀번호</Label>
-              <Input style={styles.input} />
-            </Item>
+            <ItemInput title={'이메일'} />
+            <ItemInput title={'비밀번호'} />
           </Form>
           {/* <Button full style={styles.snsSignUp}>
             <Text>Facebook 로그인</Text>
