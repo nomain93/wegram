@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ImageBackground, Alert } from 'react-native';
 import { Container, Content, Text, Form, Button } from 'native-base';
 const bImage = require('../assets/background.png');
 import ItemInput from '../components/ItemInput';
 import { signIn } from '../config/firebaseFunctions';
-
-export default function SignInPage({ navigation, authState }) {
+import * as firebase from 'firebase';
+export default function SignInPage({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+    });
+  }, []);
 
   const doSignIn = () => {
     //Email 로그인 버튼을 누를 때 실행되는 함수
