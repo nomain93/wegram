@@ -8,6 +8,9 @@ export default function SignInPage({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
   const goSignUp = () => {
     navigation.navigate('SignUpPage');
   };
@@ -17,6 +20,17 @@ export default function SignInPage({ navigation }) {
     //관리하는 상태 값을 확인
     console.log(email);
     console.log(password);
+    if (email == '') {
+      setEmailError('이메일을 입력해주세요');
+    } else {
+      setEmailError('');
+    }
+
+    if (password == '') {
+      setPasswordError('비밀번호를 입력해주세요');
+    } else {
+      setPasswordError('');
+    }
   };
   const setEmailFunc = (itemInputEmail) => {
     //이메일 상태값을 관리하는 함수
@@ -35,11 +49,17 @@ export default function SignInPage({ navigation }) {
             <Text style={styles.highlite}>we</Text>gram
           </Text>
           <Form style={styles.form}>
-            <ItemInput title={'이메일'} type={'email'} setFunc={setEmailFunc} />
+            <ItemInput
+              title={'이메일'}
+              type={'email'}
+              setFunc={setEmailFunc}
+              error={emailError}
+            />
             <ItemInput
               title={'비밀번호'}
               type={'password'}
               setFunc={setPasswordFunc}
+              error={passwordError}
             />
           </Form>
           {/* <Button full style={styles.snsSignUp}>
