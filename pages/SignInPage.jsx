@@ -4,8 +4,10 @@ import { Container, Content, Text, Form, Button } from 'native-base';
 const bImage = require('../assets/background.png');
 import ItemInput from '../components/ItemInput';
 import { signIn } from '../config/firebaseFunctions';
-import * as firebase from 'firebase';
+import Loading from '../pages/Loading';
 export default function SignInPage({ navigation }) {
+  const [ready, setReady] = useState(false);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,6 +18,10 @@ export default function SignInPage({ navigation }) {
     navigation.addListener('beforeRemove', (e) => {
       e.preventDefault();
     });
+
+    setTimeout(() => {
+      setReady(true);
+    }, 1000);
   }, []);
 
   const doSignIn = () => {
@@ -49,7 +55,7 @@ export default function SignInPage({ navigation }) {
     navigation.navigate('SignUpPage');
   };
 
-  return (
+  return ready ? (
     <Container style={styles.container}>
       <ImageBackground source={bImage} style={styles.backgroundImage}>
         <Content contentContainerStyle={styles.content} scrollEnabled={false}>
@@ -82,6 +88,8 @@ export default function SignInPage({ navigation }) {
         </Content>
       </ImageBackground>
     </Container>
+  ) : (
+    <Loading />
   );
 }
 
