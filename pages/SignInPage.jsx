@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, ImageBackground } from 'react-native';
 import { Container, Content, Text, Form, Button } from 'native-base';
 const bImage = require('../assets/background.png');
 import ItemInput from '../components/ItemInput';
 
 export default function SignInPage({ navigation }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const goSignUp = () => {
     navigation.navigate('SignUpPage');
+  };
+
+  const doSignIn = () => {
+    //Email 로그인 버튼을 누를 때 실행되는 함수
+    //관리하는 상태 값을 확인
+    console.log(email);
+    console.log(password);
+  };
+  const setEmailFunc = (itemInputEmail) => {
+    //이메일 상태값을 관리하는 함수
+    setEmail(itemInputEmail);
+  };
+  const setPasswordFunc = (itemInputPassword) => {
+    //패스워드 상태값을 관리하는 함수
+    setPassword(itemInputPassword);
   };
 
   return (
@@ -17,13 +35,17 @@ export default function SignInPage({ navigation }) {
             <Text style={styles.highlite}>we</Text>gram
           </Text>
           <Form style={styles.form}>
-            <ItemInput title={'이메일'} />
-            <ItemInput title={'비밀번호'} />
+            <ItemInput title={'이메일'} type={'email'} setFunc={setEmailFunc} />
+            <ItemInput
+              title={'비밀번호'}
+              type={'password'}
+              setFunc={setPasswordFunc}
+            />
           </Form>
           {/* <Button full style={styles.snsSignUp}>
             <Text>Facebook 로그인</Text>
           </Button> */}
-          <Button full style={styles.emailSignIn}>
+          <Button full style={styles.emailSignIn} onPress={doSignIn}>
             <Text>Email 로그인</Text>
           </Button>
           <Button full style={styles.emailSignUp} onPress={goSignUp}>
