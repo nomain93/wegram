@@ -25,9 +25,7 @@ export default function App() {
 
   const loadFont = () => {
     setTimeout(async () => {
-      await Font.loadAsync({
-        ...Ionicons.font,
-      });
+      await Font.loadAsync({});
       await setReady(true);
     }, 1000);
   };

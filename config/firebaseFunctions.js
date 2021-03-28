@@ -41,3 +41,36 @@ export async function logout(navigation) {
     Alert.alert('로그 아웃에 문제가 있습니다! ', err.message);
   }
 }
+
+export async function addDiary(content) {
+  try {
+    const db = firebase.firestore();
+    let userRef = await db.collection('users').doc(content.uid);
+
+    let data = await userRef.get().then((doc) => {
+      return doc.data();
+    });
+    console.log(data.nickName);
+    content.author = data.nickName;
+    await db
+      .collection('diary')
+      .doc(content.date + 'D')
+      .set(content);
+    return true;
+  } catch (err) {
+    Alert.alert('글 작성에 문제가 있습니다! ', err.message);
+    return false;
+  }
+}
+
+export async function imageUpload(blob, date) {
+  const storageRef = firebase
+    .storage()
+    .ref()
+    .child('diary/' + date);
+  const snapshot = await storageRef.put(blob);
+  const imageUrl = await snapshot.ref.getDownloadURL();
+  blob.close();
+
+  return imageUrl;
+}
